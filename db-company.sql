@@ -1,0 +1,243 @@
+CREATE TABLE EMPLOYEE (
+
+    Fname VARCHAR2 (20),
+
+    Minit VARCHAR2 (20),
+
+    Lname VARCHAR2 (20),
+
+    Ssn number (20),
+
+    Bdate DATE,
+
+    Address VARCHAR2 (50),
+
+    Sex VARCHAR2 (10),
+
+    Salary number (30),
+
+    Super_ssn number (20),
+
+    Dno number (10)
+
+);
+
+
+
+CREATE TABLE DEPARTMENT_UAS (
+
+    Dname VARCHAR2 (20),
+
+    Dnumber number (10),
+
+    Mgr_ssn number (30),
+
+    Mgr_start_date DATE
+
+);
+
+
+
+CREATE TABLE DEPT_LOCATIONS (
+
+    Dnumber number (10),
+
+    Dlocation VARCHAR2 (30)
+
+);
+
+
+
+CREATE TABLE PROJECT (
+
+    Pname VARCHAR2 (20),
+
+    Pnumber number (10),
+
+    Plocation number (10),
+
+    Dnum number(10)
+
+);
+
+
+
+CREATE TABLE WORKS_ON (
+
+    Essn number (20),
+
+    Pno number (10),
+
+    Hours VARCHAR(10)
+
+);
+
+
+
+CREATE TABLE DEPENDENT (
+
+    Essn number (20),
+
+    Dependent_name VARCHAR2 (20),
+
+    Sex VARCHAR(10),
+
+    Bdate DATE,
+
+    Relationship VARCHAR2(10)
+
+);
+
+
+
+ALTER TABLE EMPLOYEE Modify Ssn number(10) NOT NULL;
+
+ALTER TABLE DEPARTMENT_UAS Modify Dnumber number (10) NOT NULL;
+
+ALTER TABLE DEPT_LOCATIONS Modify Dlocation VARCHAR2 (30) NOT NULL;
+
+ALTER TABLE PROJECT Modify Pnumber number (10) NOT NULL;
+
+ALTER TABLE DEPENDENT Modify Dependent_name VARCHAR2 (20) NOT NULL;
+
+ALTER TABLE EMPLOYEE ADD CONSTRAINT emp_ssn_pk PRIMARY KEY (ssn);
+
+ALTER TABLE DEPARTMENT_UAS ADD CONSTRAINT dept_dnum_pk PRIMARY KEY (dnumber);
+
+ALTER TABLE DEPT_LOCATIONS ADD CONSTRAINT dlo_dloc_pk PRIMARY KEY (Dlocation);
+
+ALTER TABLE PROJECT ADD CONSTRAINT pro_pnum_pk PRIMARY KEY (Pnumber);
+
+ALTER TABLE DEPENDENT ADD CONSTRAINT dept_deptname_pk PRIMARY KEY (Dependent_name);
+
+ALTER TABLE EMPLOYEE ADD CONSTRAINT emp_dno_fk FOREIGN KEY (Dno) REFERENCES DEPARTMENT_UAS(Dnumber);
+
+ALTER TABLE DEPT_LOCATIONS ADD CONSTRAINT dept_dnumber_fk FOREIGN KEY (dnumber) REFERENCES DEPARTMENT_UAS(dnumber);
+
+ALTER TABLE PROJECT ADD CONSTRAINT dnu_project_fk FOREIGN KEY (Dnum) REFERENCES DEPARTMENT_UAS(Dnumber);
+
+ALTER TABLE WORKS_ON ADD CONSTRAINT esn_wo_fk FOREIGN KEY (Essn) REFERENCES EMPLOYEE(Ssn);
+
+ALTER TABLE WORKS_ON ADD CONSTRAINT pno_wo_fk FOREIGN KEY (Pno) REFERENCES PROJECT(Pnumber);
+
+ALTER TABLE DEPENDENT ADD CONSTRAINT esn_dep_fk FOREIGN KEY (Essn) REFERENCES EMPLOYEE(Ssn);
+
+
+
+INSERT INTO EMPLOYEE VALUES ('John','B','Smith','123456789','1965-01-09','731 Fondren, Houston, TX', 'M', '30000','333445555','5');
+
+INSERT INTO EMPLOYEE VALUES ('Franklin','T','Wong','333444555','1965-12-08','639 Voss, Houston, TX', 'M', '40000','888665555','5');
+
+INSERT INTO EMPLOYEE VALUES ('Alicia','J','Zelaya','999887777','1968-01-19','3321 Castle, Spring, TX', 'F', '25000','987654321','4');
+
+INSERT INTO EMPLOYEE VALUES ('Jennifer','S','Wallace','987654321','1941-06-20','291 Berry, Bellaire, TX', 'F', '43000','888665555','4');
+
+INSERT INTO EMPLOYEE VALUES ('Ramesh','K','Narayan','666884444','1962-09-15','975 Fire Oak, Humble, TX', 'M', '38000','333445555','5');
+
+INSERT INTO EMPLOYEE VALUES ('Joyce','A','English','453453453','1972-07-31','5631 Rice, Houston TX', 'F', '25000','333445555','5');
+
+INSERT INTO EMPLOYEE VALUES ('Ahmad','V','Jabbar','987987987','1969-03-29','980 Dallas, Houston, TX', 'M', '25000','987654321','4');
+
+INSERT INTO EMPLOYEE VALUES ('James','E','Borg','888665555','1937-11-10','450 Stone, Houston, TX', 'M', '55000',NULL,'1');
+
+
+
+
+
+INSERT INTO DEPARTMENT_UAS VALUES ('Research','5','333445555','1988-05-22');
+
+INSERT INTO DEPARTMENT_UAS VALUES ('Administration','4','987654321','1995-01-01');
+
+INSERT INTO DEPARTMENT_UAS VALUES ('Headquarters','1','888665555','1981-06-19');
+
+
+
+
+
+INSERT INTO DEPT_LOCATIONS VALUES ('1','Houston');
+
+INSERT INTO DEPT_LOCATIONS VALUES ('4','Stafford');
+
+INSERT INTO DEPT_LOCATIONS VALUES ('5','Bellaire');
+
+INSERT INTO DEPT_LOCATIONS VALUES ('5','Sugarland');
+
+INSERT INTO DEPT_LOCATIONS VALUES ('5','Houston');
+
+
+
+
+
+INSERT INTO WORKS_ON VALUES ('123456789','1','32.5');
+
+INSERT INTO WORKS_ON VALUES ('123456789','2','7.5');
+
+INSERT INTO WORKS_ON VALUES ('666884444','3','40.0');
+
+INSERT INTO WORKS_ON VALUES ('453453453','1','20.0');
+
+INSERT INTO WORKS_ON VALUES ('453453453','2','20.0');
+
+INSERT INTO WORKS_ON VALUES ('333445555','2','10.0');
+
+INSERT INTO WORKS_ON VALUES ('333445555','3','10.0');
+
+INSERT INTO WORKS_ON VALUES ('333445555','10','10.0');
+
+INSERT INTO WORKS_ON VALUES ('333445555','20','10.0');
+
+INSERT INTO WORKS_ON VALUES ('999887777','30','30.0');
+
+INSERT INTO WORKS_ON VALUES ('999887777','10','10.0');
+
+INSERT INTO WORKS_ON VALUES ('987987987','10','35.0');
+
+INSERT INTO WORKS_ON VALUES ('987987987','30','5.0');
+
+INSERT INTO WORKS_ON VALUES ('987654321','30','20.0');
+
+INSERT INTO WORKS_ON VALUES ('987654321','20','15.0');
+
+INSERT INTO WORKS_ON VALUES ('888665555','20',NULL);
+
+
+
+INSERT INTO PROJECT VALUES ('ProductX','1','Bellaire','5');
+
+INSERT INTO PROJECT VALUES ('ProductY','2','Sugarland','5');
+
+INSERT INTO PROJECT VALUES ('ProductZ','3','Houston','5');
+
+INSERT INTO PROJECT VALUES ('Computerization','10','Stafford','4');
+
+INSERT INTO PROJECT VALUES ('Reorganization','20','Houston','1');
+
+INSERT INTO PROJECT VALUES ('Newbenefits','30','Stafford','4');
+
+
+
+INSERT INTO DEPENDENT VALUES ('333445555','Alice','F','1986-04-05','Daughter');
+
+INSERT INTO DEPENDENT VALUES ('333445555','Theodore','M','1983-10-25','Son');
+
+INSERT INTO DEPENDENT VALUES ('333445555','Joy','F','1985-05-03','Spouse');
+
+INSERT INTO DEPENDENT VALUES ('987654321','Abner','M','1942-02-28','Spouse');
+
+INSERT INTO DEPENDENT VALUES ('123456789','Michael','M','1988-01-04','Son');
+
+INSERT INTO DEPENDENT VALUES ('123456789','Alice','F','1988-12-30','Daughter');
+
+INSERT INTO DEPENDENT VALUES ('123456789','Elizabeth','F','1967-05-05','Spouse');
+
+
+
+SELECT Fname, Lname, Ssn, bdate, address FROM EMPLOYEE ORDER BY Minit DESC;
+
+SELECT e. Ssn, e. Fname, e. Lname, e. Dno FROM EMPLOYEE e JOIN DEPARTMENT_UAS d ON (e.dno = d.dname);
+
+SELECT d.dname, l.dlocation FROM DEPARTMENT_UAS d JOIN dept_location l ON (d.dnumber = l.dnumber);
+
+SELECT*FROM DEPENDENT WHERE Relationship IN('Daughter','Son');
+
+SELECT e. Ssn, e. Lname, p. Pname, p. Pnumber FROM EMPLOYEE e JOIN PROJECT p ON (e.dno = p.num);
